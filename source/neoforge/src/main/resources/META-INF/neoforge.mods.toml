@@ -1,0 +1,36 @@
+modLoader="javafml"
+loaderVersion="[1,)"
+license="MIT License"
+
+[[mods]]
+modId="pcoil"
+version="${modVersion}"
+displayName="Power Coils"
+displayURL="https://legacy.curseforge.com/minecraft/mc-mods/power-coils"
+logoFile="logo.png"
+credits="Roblox and MCreator <3"
+authors="Maxsteelbro"
+description="Adds 6 coil items from the classic era of Roblox."
+
+# Start of user code block mod configuration
+# End of user code block mod configuration
+
+[[dependencies.pcoil]]
+    modId="neoforge"
+    type="required"
+    versionRange="[${neoVersion},)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.pcoil]]
+    modId="minecraft"
+    type="required"
+    versionRange="[${minecraftVersion}]"
+    ordering="AFTER"
+    side="BOTH"
+
+
+
+
+# Start of user code block dependencies configuration
+# End of user code block dependencies configuration

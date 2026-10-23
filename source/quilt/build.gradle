@@ -1,0 +1,22 @@
+plugins {
+ id 'java'
+ id 'net.fabricmc.fabric-loom' version '1.17.21'
+}
+apply from: rootProject.file('gradle/targets.gradle')
+evaluationDependsOn(':common')
+evaluationDependsOn(':fabric')
+base { archivesName = "${providers.gradleProperty('mod_id').get()}-quilt" }
+dependencies {
+ implementation "net.fabricmc:fabric-loader:0.19.3"
+ implementation "net.fabricmc.fabric-api:fabric-api:${targetData.api}"
+ implementation project(':common')
+}
+tasks.named('jar') { from(project(':common').sourceSets.main.output) }
+tasks.named('sourcesJar') { from(project(':common').sourceSets.main.allSource) }
+dependencies { implementation project(':fabric') }
+tasks.named('jar') {
+ from(project(':fabric').sourceSets.main.output) { exclude 'fabric.mod.json' }
+}
+tasks.named('sourcesJar') {
+ from(project(':fabric').sourceSets.main.allSource) { exclude 'fabric.mod.json' }
+}

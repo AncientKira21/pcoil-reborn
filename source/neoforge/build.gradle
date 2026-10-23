@@ -1,0 +1,79 @@
+plugins {
+    id 'java'
+    id 'net.neoforged.moddev' version '2.0.148'
+}
+// Select a target with -PmcVersion=26.2 (26.1.2 is the default).
+def targets = [
+    '26.1.2': [neo: '26.1.2.114', format: '84', configType: 'SERVER'],
+    '26.2': [neo: '26.2.0.88', format: '88', configType: 'SERVER'],
+    '26.3': [neo: '26.3.0.69-beta', format: '[97, 1]', configType: 'SYNCED']
+]
+def minecraftTarget = providers.gradleProperty('mcVersion').getOrElse('26.1.2')
+if (!targets.containsKey(minecraftTarget)) {
+    throw new GradleException("Unsupported mcVersion '${minecraftTarget}'. Choose ${targets.keySet().join(', ')}")
+}
+def target = targets[minecraftTarget]
+version = "${providers.gradleProperty('version').get()}+${minecraftTarget}"
+group = providers.gradleProperty('group').get()
+base { archivesName = "${providers.gradleProperty('mod_id').get()}-neoforge" }
+// Keep compiled classes and transformed Minecraft artifacts separate per target.
+layout.buildDirectory = layout.projectDirectory.dir("build/targets/${minecraftTarget}")
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(25)
+    withSourcesJar()
+}
+neoForge {
+    version = target.neo
+    runs {
+        client { client() }
+        server { server(); programArgument '--nogui' }
+    }
+    mods {
+        pcoil { sourceSet sourceSets.main }
+    }
+}
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
+tasks.withType(Jar).configureEach {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}
+
+sourceSets {
+    main {
+        java.setSrcDirs(['src/main/java'])
+        resources.setSrcDirs(['src/main/resources', rootProject.file('common/src/main/resources')])
+    }
+}
+
+// Expand only metadata, not arbitrary JSON or binary assets.
+tasks.named('processResources') {
+    def metadata = [modVersion: project.version.toString(), minecraftVersion: minecraftTarget,
+                    neoVersion: target.neo, resourceFormat: target.format]
+    inputs.properties(metadata)
+    filesMatching(['META-INF/neoforge.mods.toml', 'pack.mcmeta']) { expand(metadata) }
+}
+tasks.withType(Jar).configureEach {
+    destinationDirectory = layout.projectDirectory.dir('build/libs')
+}
+
+// NeoForge 26.3 renamed the server-synchronized configuration type.
+// Generate a typed adapter so each target's compiler checks its actual enum.
+def generateBuildTarget = tasks.register('generateBuildTarget') {
+    def output = layout.buildDirectory.dir('generated/sources/buildTarget')
+    inputs.property('serverConfigType', target.configType)
+    outputs.dir(output)
+    doLast {
+        def file = output.get().file('com/ancientkira/pcoil/compat/PowerCoilsBuildTarget.java').asFile
+        file.parentFile.mkdirs()
+        file.text = """package com.ancientkira.pcoil.compat;
+
+import net.neoforged.fml.config.ModConfig;
+
+public final class PowerCoilsBuildTarget {
+    private PowerCoilsBuildTarget() {}
+    public static final ModConfig.Type SERVER_CONFIG_TYPE = ModConfig.Type.${target.configType};
+}
+"""
+    }
+}
+sourceSets.main.java.srcDir(generateBuildTarget)

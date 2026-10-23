@@ -1,0 +1,12 @@
+pluginManagement {
+    repositories {
+        maven { url = 'https://maven.fabricmc.net/' }
+        gradlePluginPortal()
+        maven { url = 'https://maven.neoforged.net/releases' }
+    }
+}
+rootProject.name = 'pcoil'
+
+include 'common', 'neoforge', 'fabric', 'quilt'
+
+// Make the shared platform runtime available before loader modules configure packaging.

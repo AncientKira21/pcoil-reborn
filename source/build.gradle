@@ -1,0 +1,5 @@
+plugins { id 'base' }
+layout.buildDirectory=layout.projectDirectory.dir('common/build/aggregate')
+tasks.named('assemble') { dependsOn(':common:assemble', ':neoforge:assemble', ':fabric:assemble', ':quilt:assemble') }
+tasks.named('check') { dependsOn(':common:check', ':neoforge:check', ':fabric:check', ':quilt:check') }
+tasks.named('clean') { dependsOn(':common:clean', ':neoforge:clean', ':fabric:clean', ':quilt:clean') }

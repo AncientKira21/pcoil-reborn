@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "pcoil:gravity_coil",
+    "pcoil:speed_coil",
+    "pcoil:regeneration_coil",
+    "pcoil:fusion_coil",
+    "pcoil:snowy_gravity_coil",
+    "pcoil:dual_gravity_coil_boots"
+  ]
+}

@@ -1,0 +1,26 @@
+ext.minecraftTarget = providers.gradleProperty('mcVersion').getOrElse('26.1.2')
+def versions = [
+ '26.1.2': [api: '0.155.3+26.1.2', format: '84'],
+ '26.2': [api: '0.161.0+26.2', format: '88'],
+ '26.3': [api: '0.162.0+26.3', format: '[97, 1]']
+]
+if (!versions.containsKey(minecraftTarget)) throw new GradleException("Unsupported target ${minecraftTarget}")
+ext.targetData = versions[minecraftTarget]
+version = "${providers.gradleProperty('version').get()}+${minecraftTarget}"
+group = providers.gradleProperty('group').get()
+layout.buildDirectory = layout.projectDirectory.dir("build/targets/${minecraftTarget}")
+java { toolchain.languageVersion = JavaLanguageVersion.of(25); withSourcesJar() }
+repositories { maven { url='https://maven.fabricmc.net/' }; mavenCentral() }
+dependencies { minecraft "com.mojang:minecraft:${minecraftTarget}" }
+tasks.withType(JavaCompile).configureEach { options.encoding='UTF-8' }
+tasks.withType(Jar).configureEach {
+ destinationDirectory=layout.projectDirectory.dir('build/libs')
+ preserveFileTimestamps=false
+ reproducibleFileOrder=true
+ duplicatesStrategy=DuplicatesStrategy.EXCLUDE
+}
+tasks.named('processResources') {
+ def values=[modVersion: project.version.toString(), minecraftVersion: minecraftTarget, resourceFormat: targetData.format]
+ inputs.properties(values)
+ filesMatching(['pack.mcmeta','fabric.mod.json']) { expand(values) }
+}

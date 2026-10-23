@@ -1,0 +1,38 @@
+{
+  "gravity_coil": {
+    "subtitle": "subtitles.gravity_coil",
+    "sounds": [
+      {
+        "name": "pcoil:gravitycoil",
+        "stream": false
+      }
+    ]
+  },
+  "speed_coil": {
+    "subtitle": "subtitles.speed_coil",
+    "sounds": [
+      {
+        "name": "pcoil:speedcoil",
+        "stream": false
+      }
+    ]
+  },
+  "fusion_coil": {
+    "subtitle": "subtitles.fusion_coil",
+    "sounds": [
+      {
+        "name": "pcoil:fusioncoil",
+        "stream": false
+      }
+    ]
+  },
+  "regen_coil": {
+    "subtitle": "subtitles.regen_coil",
+    "sounds": [
+      {
+        "name": "pcoil:regencoil",
+        "stream": false
+      }
+    ]
+  }
+}

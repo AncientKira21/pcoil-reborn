@@ -1,0 +1,42 @@
+plugins {
+ id 'java'
+ id 'net.fabricmc.fabric-loom' version '1.17.21'
+}
+apply from: rootProject.file('gradle/targets.gradle')
+evaluationDependsOn(':common')
+base { archivesName = "${providers.gradleProperty('mod_id').get()}-fabric" }
+dependencies {
+ implementation "net.fabricmc:fabric-loader:0.19.3"
+ implementation "net.fabricmc.fabric-api:fabric-api:${targetData.api}"
+ implementation project(':common')
+}
+tasks.named('jar') { from(project(':common').sourceSets.main.output) }
+tasks.named('sourcesJar') { from(project(':common').sourceSets.main.allSource) }
+
+// Fabric's submit helper lost the crumbling-overlay parameter in 26.3.
+def generateArmorBridge=tasks.register('generateArmorBridge') {
+ def output=layout.buildDirectory.dir('generated/sources/armorBridge')
+ def overlay=minecraftTarget=='26.3' ? '' : ', null'
+ inputs.property('overlay',overlay)
+ outputs.dir(output)
+ doLast {
+  def file=output.get().file('com/ancientkira/pcoil/fabric/ArmorBridge.java').asFile
+  file.parentFile.mkdirs()
+  file.text="""package com.ancientkira.pcoil.fabric;
+import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+public final class ArmorBridge {
+ public static void submit(HumanoidModel<HumanoidRenderState> original,HumanoidModel<HumanoidRenderState> model,
+  HumanoidRenderState state,SubmitNodeCollector collector,PoseStack poses,RenderType type,int light) {
+  ArmorRenderer.submitTransformCopyingModel(original,state,model,state,false,collector.order(0),poses,type,light,OverlayTexture.NO_OVERLAY,0${overlay});
+ }
+}
+"""
+ }
+}
+sourceSets.main.java.srcDir(generateArmorBridge)

@@ -1,0 +1,44 @@
+{
+  "display": {
+    "icon": {
+      "id": "pcoil:regeneration_coil"
+    },
+    "title": {
+      "translate": "advancements.regen_coil_obtained.title"
+    },
+    "description": {
+      "translate": "advancements.regen_coil_obtained.descr"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "regen_coil_obtained_0": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "pcoil:regeneration_coil"
+            ],
+            "count": {
+              "min": 1,
+              "max": 37
+            }
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 0,
+    "recipes": [
+      "pcoil:gravity_coil_recipe",
+      "pcoil:speed_coil_recipe",
+      "pcoil:regen_coil_recipe"
+    ]
+  },
+  "parent": "pcoil:speed_coil_obtained"
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "pcoil:custom/regen_coil",
+  "textures": {
+    "0": "pcoil:block/regeneration_coil_texture",
+    "particle": "minecraft:item/lime_candle"
+  }
+}

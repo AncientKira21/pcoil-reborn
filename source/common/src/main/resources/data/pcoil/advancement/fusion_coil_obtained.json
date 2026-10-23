@@ -1,0 +1,44 @@
+{
+  "display": {
+    "icon": {
+      "id": "pcoil:fusion_coil"
+    },
+    "title": {
+      "translate": "advancements.fusion_coil_obtained.title"
+    },
+    "description": {
+      "translate": "advancements.fusion_coil_obtained.descr"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "fusion_coil_obtained_0": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "pcoil:fusion_coil"
+            ],
+            "count": {
+              "min": 1,
+              "max": 37
+            }
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 300,
+    "recipes": [
+      "pcoil:gravity_coil_recipe",
+      "pcoil:speed_coil_recipe",
+      "pcoil:fusion_coil_recipe"
+    ]
+  },
+  "parent": "pcoil:regen_coil_obtained"
+}

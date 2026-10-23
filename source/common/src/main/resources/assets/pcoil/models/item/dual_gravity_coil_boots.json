@@ -1,0 +1,7 @@
+{
+  "parent": "pcoil:custom/dual_gravity_coil_item",
+  "textures": {
+    "0": "pcoil:block/dual_gravity_coil_texture",
+    "particle": "minecraft:item/cyan_candle"
+  }
+}

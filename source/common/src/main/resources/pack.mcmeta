@@ -1,0 +1,7 @@
+{
+  "pack": {
+    "description": "Power Coils resources for Minecraft ${minecraftVersion}",
+    "min_format": ${resourceFormat},
+    "max_format": ${resourceFormat}
+  }
+}
