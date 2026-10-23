@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "aba",
+    "bcb",
+    "aba"
+  ],
+  "key": {
+    "a": "minecraft:snowball",
+    "b": "minecraft:blue_ice",
+    "c": "pcoil:gravity_coil"
+  },
+  "result": {
+    "id": "pcoil:snowy_gravity_coil",
+    "count": 1
+  }
+}

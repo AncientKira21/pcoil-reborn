@@ -1,0 +1,7 @@
+{
+  "parent": "pcoil:custom/alt_speed_coil",
+  "textures": {
+    "1": "pcoil:block/alt_speed_coil_texture",
+    "particle": "minecraft:item/red_candle"
+  }
+}

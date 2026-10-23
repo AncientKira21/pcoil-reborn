@@ -1,0 +1,7 @@
+{
+  "parent": "pcoil:custom/fusion_coil",
+  "textures": {
+    "0": "pcoil:block/fusion_coil_texture",
+    "particle": "minecraft:item/purple_candle"
+  }
+}

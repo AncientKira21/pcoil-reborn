@@ -1,0 +1,7 @@
+{
+  "parent": "pcoil:custom/alt_snowy_gravity_coil",
+  "textures": {
+    "1": "pcoil:block/alt_gravity_coil_texture",
+    "particle": "minecraft:item/light_blue_candle"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    "pcoil:dual_gravity_coil_boots"
+  ],
+  "result": {
+    "id": "pcoil:gravity_coil",
+    "count": 2
+  }
+}

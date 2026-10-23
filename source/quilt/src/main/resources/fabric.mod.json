@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "pcoil",
+  "version": "${modVersion}",
+  "name": "Power Coils",
+  "description": "Adds 6 classic Roblox coil items.",
+  "authors": [
+    "Maxsteelbro"
+  ],
+  "license": "MIT",
+  "icon": "logo.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.ancientkira.pcoil.quilt.QuiltPowerCoils"
+    ],
+    "client": [
+      "com.ancientkira.pcoil.quilt.QuiltPowerCoilsClient"
+    ]
+  },
+  "mixins": [
+    "pcoil.fabric.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.18.4",
+    "minecraft": "${minecraftVersion}",
+    "java": ">=25",
+    "fabric-api": "*",
+    "quilt_loader": "*"
+  }
+}

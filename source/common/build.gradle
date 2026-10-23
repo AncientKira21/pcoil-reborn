@@ -1,0 +1,24 @@
+plugins {
+ id 'java-library'
+ id 'net.fabricmc.fabric-loom' version '1.17.21'
+}
+apply from: rootProject.file('gradle/targets.gradle')
+base { archivesName = "${providers.gradleProperty('mod_id').get()}-common" }
+
+dependencies { compileOnly 'net.fabricmc:fabric-loader:0.19.3' }
+
+// Plain-Java checks use a dedicated source set, not an empty JUnit suite.
+sourceSets {
+ configCheck {
+  java.srcDir('src/check/java')
+  compileClasspath += sourceSets.main.output + configurations.compileClasspath
+  runtimeClasspath += sourceSets.main.output + configurations.runtimeClasspath
+ }
+}
+// This check does not initialize or launch Minecraft.
+tasks.register('verifySharedConfig', JavaExec) {
+ dependsOn(tasks.named('configCheckClasses'))
+ classpath=sourceSets.configCheck.runtimeClasspath
+ mainClass='com.ancientkira.pcoil.shared.SharedConfigChecks'
+}
+tasks.named('check') { dependsOn('verifySharedConfig') }

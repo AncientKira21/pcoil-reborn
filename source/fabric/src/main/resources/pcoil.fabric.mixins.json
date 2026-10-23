@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.ancientkira.pcoil.fabric.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "client": [
+    "RangePropertiesAccessor",
+    "EffectsInInventoryMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
